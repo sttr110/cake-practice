@@ -38,10 +38,10 @@ class PostsController extends AppController {
     }
 
     $post = $this->Post->findById($id);
-    if(!$posts) {
+    if(!$post) {
       throw new NotFoundException(__('Invalid post'));
     }
-
+    
     if($this->request->is('post')) {
       $this->Post->id = $id; 
       if($this->Post->save($this->request->data)) {
