@@ -31,4 +31,27 @@ class PostsController extends AppController {
        $this->Session->setFlash(__('Unable to add your post.'));
      }
   }
+
+  public function edit($id = null) {
+    if(!$id) {
+      throw new NotFoundException(__('Invalid post'));
+    }
+
+    $post = $this->Post->findById($id);
+    if(!$posts) {
+      throw new NotFoundException(__('Invalid post'));
+    }
+
+    if($this->request->is('post')) {
+      $this->Post->id = $id; 
+      if($this->Post->save($this->request->data)) {
+        $this->Session->setFlash(__('投稿されました'));
+        return $this->redirect(array('action' => 'index'));
+      }
+    }
+
+    if(!$this->request->data) {
+      $this->request->data = $post;
+    }
+  }
 }
