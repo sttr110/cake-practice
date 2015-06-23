@@ -12,10 +12,23 @@ class PostsController extends AppController {
       throw new NotFoundException(__('Invalid post'));
     }
 
+    //$idを元に、対応するレコードを$postnに入れる
     $post = $this->Post->findById($id);
     if(!$post) {
       throw new NotFoundException(__('Invalid post'));
     }
     $this->set('post', $post);
+  }
+
+  public function add() {
+    //isはrequestオブジェクトのHTTPリクエストを判断するためのもの
+    if($this->request-is('post')) {
+      $this->Post->create();
+      if ($this->Post->save($this->request->data)) {
+        $this->Session->setFlash(__('Your post has been saved.'));
+        return $this->redirect(array('action' => 'index'));
+       }
+       $this->Session->setFlash(__('Unable to add your post.'));
+     }
   }
 }
