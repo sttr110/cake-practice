@@ -22,7 +22,7 @@ class PostsController extends AppController {
 
   public function add() {
     //isはrequestオブジェクトのHTTPリクエストを判断するためのもの
-    if($this->request-is('post')) {
+    if($this->request->is('post')) {
       $this->Post->create();
       if ($this->Post->save($this->request->data)) {
         $this->Session->setFlash(__('Your post has been saved.'));
