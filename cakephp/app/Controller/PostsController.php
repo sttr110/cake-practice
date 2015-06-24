@@ -42,12 +42,14 @@ class PostsController extends AppController {
       throw new NotFoundException(__('Invalid post'));
     }
     
-    if($this->request->is('post')) {
+    //putじゃないと変種されない
+    if($this->request->is(array('post', 'put'))) {
       $this->Post->id = $id; 
       if($this->Post->save($this->request->data)) {
         $this->Session->setFlash(__('投稿されました'));
         return $this->redirect(array('action' => 'index'));
       }
+      $this->Session->setFlash(__('投稿されました'));
     }
 
     if(!$this->request->data) {
