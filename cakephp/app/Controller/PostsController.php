@@ -56,4 +56,21 @@ class PostsController extends AppController {
       $this->request->data = $post;
     }
   }
+
+  public function delete($id) {
+    if($this->request->is('get')) {
+      throw new MethodNotAllowedException();
+    }
+   
+    if($this->Post->delete($id)) {
+      $this->Session->setFlash(
+        __('deleted'));
+    } else {
+      $this->Session->setFlash(
+        __('not deleted'));
+    }
+
+    return $this->redirect(array('action' => 'index'));
+
+  }
 }
